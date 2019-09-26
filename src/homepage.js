@@ -1,5 +1,7 @@
 import React from 'react';
-import {Alert, Form,InputGroup,  FormControl, Button} from 'react-bootstrap';
+import { Alert, InputGroup, FormControl, Button } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import PokeCard from './pokecard';
 import Axios from 'axios';
 
@@ -14,7 +16,7 @@ export default class HomePage extends React.Component {
     }
 
     storeSrchTxt = (event) => {
-        let pokeName = event.currentTarget.value;
+        let pokeName = event.currentTarget.value.toLowerCase();
         this.setState({
             pokeName
         });
@@ -30,10 +32,14 @@ export default class HomePage extends React.Component {
     getPokeData = () =>{
         Axios('https://pokeapi.co/api/v2/pokemon/'+this.state.pokeName).then((res)=>{
             debugger;
-            if(res.status === 200){
-                this.setState({
-                    pokeData: res.data
-                });
+            if (res.status === 200) {
+                if (res.data.count) {
+                    
+                } else {
+                    this.setState({
+                        pokeData: res.data
+                    });
+                }
             } else {
                 this.showError('Something went wrong. Please try again.');
             }
@@ -71,12 +77,15 @@ export default class HomePage extends React.Component {
 
                     <InputGroup className="poke-srch-box">
                         <FormControl
+                            className="srch-bar"
                             placeholder="Enter Pokemon Name"
                             onChange={this.storeSrchTxt} 
                             onKeyDown={this.handleKeyDwn}
                         />
-                        <InputGroup.Append>
-                        <Button variant="outline-success" onClick={this.getPokeData}>Button</Button>
+                        <InputGroup.Append className="srch-btn-holder">
+                            <Button variant="outline-warning" onClick={this.getPokeData}>
+                                <FontAwesomeIcon icon={faSearch}></FontAwesomeIcon>
+                            </Button>
                         </InputGroup.Append>
                     </InputGroup>
                     {this.state.pokeData?<PokeCard {...this.state.pokeData} />:<></>}
