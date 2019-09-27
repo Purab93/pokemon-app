@@ -52,10 +52,14 @@
     border-radius: 10px;
     display: inline-block;
     margin-top: 25px;
-    min-width: 200px;
+}
+.poke-details-container {
+  border: 5px solid #facc48;
+  border-radius: 10px;
 }
 
-.poke-detail {
+.poke-card-header,
+.poke-detail-header {
     padding: 10px;
     background: #facc48;
     color: #0c4a94;
@@ -131,6 +135,10 @@
     padding: 20px 0;
 }
 
-.poke-img-slider {
-    padding: 0 10px;
+.poke-card-container .poke-img-slider{
+  padding: 0 15px;
+}
+
+.poke-detail-body .poke-img-slider {
+    padding: 0 30px;
 }

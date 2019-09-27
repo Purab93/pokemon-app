@@ -1,17 +1,23 @@
 import React from 'react';
-//import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import './App.css';
 import HomePage from './homepage';
+import PokeDetail from './pokedetail';
 
 export default class App extends React.Component {
   render(){
     return (
       <div className="app-container container">
-        <div className="logo-holder">
-          <img src={process.env.PUBLIC_URL + '/logo.png'} alt="pokemon-logo" />
-        </div>
-        <HomePage />
+        <Router history={this.props.history}>
+          <div className="logo-holder">
+            <img src={process.env.PUBLIC_URL + '/logo.png'} alt="pokemon-logo" />
+          </div>
+          <Switch>
+            <Route exact path="/" component={HomePage}/>
+            <Route path="/pokemon/:pokename" component={PokeDetail}/>
+          </Switch>
+        </Router>
       </div>
     );
   }
@@ -19,7 +25,8 @@ export default class App extends React.Component {
 
 /** 
  * 
- * <Router history={this.props.history}>
+ * 
+ <Router history={this.props.history}>
         <Menu />
         <ScrollToTop>
           <Switch>

@@ -2,18 +2,22 @@ import React from 'react';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Link } from "react-router-dom";
 
-export default class PokeCard extends React.Component {
+export default class PokeDetail extends React.Component {
+    constructor(props){
+        super(props);
+        this.state={...props.location.state}
+    }
 
     getPokeDetails(){
-        let pokeData = this.props;
+        let pokeData = this.state;debugger
         return {
             name: pokeData.name,
             imgData: this.getPokeImgs(pokeData.sprites),
             type: this.getPokeType(pokeData.types),
             hp: pokeData.base_experience,
-            weight: pokeData.weight
+            weight: pokeData.weight,
+            height: pokeData.height
         }
     }
 
@@ -51,24 +55,22 @@ export default class PokeCard extends React.Component {
     render(){
         let pokeData = this.getPokeDetails();
         return (
-            <div className="poke-card-container">
-                <div className="poke-card-header">
+            <div className="poke-details-container">
+                <div className="poke-detail-header">
                     <div className="poke-name">{pokeData.name}</div>
                     <div className="poke-hp">
                         <div>{pokeData.hp+'HP'}</div>
                     </div>
                     <div className="poke-type">{pokeData.type + ' Pokemon'}</div>
                 </div>
-                <div className="poke-img-slider">
-                    {pokeData.imgData}
-                </div>
-                <div className="link-holder">
-                    <Link to={{
-                        pathname: `/pokemon/${pokeData.name}`,
-                        state: {...this.props}
-                    }}>
-                        View Details
-                    </Link>
+                <div className="poke-detail-body row">
+                    <div className="poke-img-slider col-12 col-md-4">
+                        {pokeData.imgData}
+                    </div>
+
+                    <div className="poke-detail col-12 col-md-8">
+
+                    </div>
                 </div>
             </div>
         );
