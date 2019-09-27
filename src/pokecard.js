@@ -12,10 +12,10 @@ export default class PokeCard extends React.Component {
             name: pokeData.name,
             imgData: this.getPokeImgs(pokeData.sprites),
             type: this.getPokeType(pokeData.types),
-            hp: pokeData.base_experience,
-            weight: pokeData.weight
+            hp: pokeData.base_experience
         }
     }
+
 
     getPokeType(pokeType) {
         let typeData = pokeType.map((val) => {
@@ -28,12 +28,11 @@ export default class PokeCard extends React.Component {
         let sliderConfig = {
             dots: false,
             infinite: true,
-            speed: 500,
             slidesToShow: 1,
             slidesToScroll: 1,
             className: 'poke-sldr',
             autoplay: true,
-            autoplaySpeed: 1000,
+            autoplaySpeed: 2000,
             lazyLoad: 'progressive'
         };
         return (<Slider {...sliderConfig } >

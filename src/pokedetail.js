@@ -17,8 +17,22 @@ export default class PokeDetail extends React.Component {
             type: this.getPokeType(pokeData.types),
             hp: pokeData.base_experience,
             weight: pokeData.weight,
-            height: pokeData.height
+            height: pokeData.height,
+            stats: this.getPokeStats(pokeData.stats)
         }
+    }
+
+
+    getPokeStats(stats){
+        return (<>
+            {stats.map((obj)=>{
+                return (
+                    <div className="poke-stat" key={obj.stat.name}>
+                        {obj.stat.name} - {obj.base_stat}
+                    </div>
+                )
+            })}
+        </>);
     }
 
     getPokeType(pokeType) {
@@ -68,8 +82,11 @@ export default class PokeDetail extends React.Component {
                         {pokeData.imgData}
                     </div>
 
-                    <div className="poke-detail col-12 col-md-8">
-
+                    <div className="poke-details col-12 col-md-8">
+                        <div className="poke-stats-header">Stats</div>
+                        <div className="poke-stats-holder">
+                            {pokeData.stats}
+                        </div>
                     </div>
                 </div>
             </div>
