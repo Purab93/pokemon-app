@@ -26,21 +26,3 @@ export default class App extends React.Component {
     );
   }
 }
-
-/** 
- * 
- * 
- <Router history={this.props.history}>
-        <Menu />
-        <ScrollToTop>
-          <Switch>
-              <Route exact path="/" component={Home}/>
-              <Route exact path="/Home" component={Home}/>
-              <Route path="/package/:id" component={PackageDescription}/>
-              <Route path="/destdetail/:id" component={DestinationDetail} />
-            <Route path="/ordersummary/:id" component={OrderManagement} />
-          </Switch>
-        </ScrollToTop>
-        <Footer />
-      </Router>
-*/
