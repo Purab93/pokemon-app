@@ -4,6 +4,7 @@ import Select from 'react-select';
 import Axios from 'axios';
 import { Link } from "react-router-dom";
 import PokeCard from './pokecard';
+import Loader from './loader';
 
 /**
  * class for rendering the Homepage data
@@ -15,7 +16,8 @@ export default class HomePage extends React.Component {
                 selPoke: null,
                 errMsg: '',
                 showErrMsg: false,
-                srchDisable: true
+                srchDisable: true,
+                showLoader: true
             }
         }
         /**
@@ -32,7 +34,8 @@ export default class HomePage extends React.Component {
                 pokeList = JSON.parse(pokeList);
                 this.setState({
                     pokeList,
-                    pokeData
+                    pokeData,
+                    showLoader: false
                 });
             } else if (pokeList && !pokeData) {
                 pokeList = JSON.parse(pokeList);
@@ -62,7 +65,8 @@ export default class HomePage extends React.Component {
 
                         this.setState({
                             pokeList,
-                            pokeData: rndmPokeData.data
+                            pokeData: rndmPokeData.data,
+                            showLoader: false
                         });
                     } else {
                         this.showError('Something went wrong. Please try again.');
@@ -98,7 +102,8 @@ export default class HomePage extends React.Component {
                     localStorage.setItem(date.toDateString(), JSON.stringify(rndmPokeData.data));
                     this.setState({
                         pokeData: rndmPokeData.data,
-                        pokeList
+                        pokeList,
+                        showLoader: false
                     });
                 } else {
                     this.showError('Something went wrong. Please try again.');
@@ -133,46 +138,47 @@ export default class HomePage extends React.Component {
 
         render() {
             return ( 
-                <div className = "home-container" >
-                    <div className = "home-content" > {
-                    this.state.showErrMsg ? < Alert variant = 'danger'
-                    onClose = {
-                        () => this.setState({
-                            showErrMsg: false
-                        })
-                    }
-                    dismissible > { this.state.errMsg } </Alert>:<></ >
-                } <div className = "srch-container" >
-                <div className = "sel-holder" >
-                    <Select placeholder = "Select Pokemon ..."
-                    isMulti = { true }
-                    value = { this.state.selPoke }
-                    onChange = { this.hndlPokeChng }
-                    options = { this.state.pokeList ? this.state.pokeList : [] }
-                    /> 
-                </div> 
-                <div className = "srch-btn" >
-                <Link to = {
-                    {
-                        pathname: '/srchpg',
-                        state: {
-                            selPoke: this.state.selPoke
+                this.state.showLoader?<Loader />:
+                    <div className = "home-container" >
+                        <div className = "home-content" > {
+                        this.state.showErrMsg ? < Alert variant = 'danger'
+                        onClose = {
+                            () => this.setState({
+                                showErrMsg: false
+                            })
                         }
-                    }
-                } >
-                    <Button variant = "danger"
-                    disabled = { this.state.srchDisable } >
-                    Search </Button> 
-                </Link> 
-                </div> 
-                </div> {
-                    this.state.pokeData ?<>
-                        <div className = "home-poke-quest" >
-                            Today 's Poke Guide 
-                        </div> <PokeCard {...this.state.pokeData }
-                    /> </>: < > </>} 
-                </div> 
-            </div>
+                        dismissible > { this.state.errMsg } </Alert>:<></ >
+                    } <div className = "srch-container" >
+                    <div className = "sel-holder" >
+                        <Select placeholder = "Select Pokemon ..."
+                        isMulti = { true }
+                        value = { this.state.selPoke }
+                        onChange = { this.hndlPokeChng }
+                        options = { this.state.pokeList ? this.state.pokeList : [] }
+                        /> 
+                    </div> 
+                    <div className = "srch-btn" >
+                    <Link to = {
+                        {
+                            pathname: '/srchpg',
+                            state: {
+                                selPoke: this.state.selPoke
+                            }
+                        }
+                    } >
+                        <Button variant = "danger"
+                        disabled = { this.state.srchDisable } >
+                        Search </Button> 
+                    </Link> 
+                    </div> 
+                    </div> {
+                        this.state.pokeData ?<>
+                            <div className = "home-poke-quest" >
+                                Today 's Poke Guide 
+                            </div> <PokeCard {...this.state.pokeData }
+                        /> </>: < > </>} 
+                    </div> 
+                </div>
         );
     }
 }

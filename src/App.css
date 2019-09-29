@@ -241,7 +241,7 @@ span.accor-header-icon {
 }
 
 .pokeball-logo img {
-    max-width:150px;
+    max-width:130px;
 }
 
 .sel-holder div {
@@ -256,4 +256,11 @@ span.accor-header-icon {
     .pokeball-logo img {
         max-width:50px;
     }
+}
+
+.loaderbg {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%);
 }

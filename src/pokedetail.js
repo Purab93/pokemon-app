@@ -4,7 +4,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Accordion, Card } from 'react-bootstrap';
-
+import Loader from './loader';
 
 /**
  * class for Pokemon Details and Features
@@ -12,7 +12,7 @@ import { Accordion, Card } from 'react-bootstrap';
 export default class PokeDetail extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { ...props.location.state }
+        this.state = { ...props.location.state,...{showLoader: true}}
     }
 
     componentDidMount() {
@@ -64,7 +64,8 @@ export default class PokeDetail extends React.Component {
                 };
                 let finalData = { ...pokeData, ...addData };
                 this.setState({
-                    finalData
+                    finalData,
+                    showLoader: false
                 })
             }).catch((err) => {
                 console.log('Something went wrong');
@@ -144,6 +145,7 @@ export default class PokeDetail extends React.Component {
     render() {
         let pokeData = this.state && this.state.finalData ? this.state.finalData : {};
         return (
+            this.state.showLoader?<Loader />:
             <div className="poke-details-container">
                 <div className="poke-detail-header">
                     <div className="poke-name">{pokeData.name}</div>

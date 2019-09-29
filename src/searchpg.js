@@ -1,6 +1,7 @@
 import React from 'react';
 import Axios from 'axios';
 import PokeCard from './pokecard';
+import Loader from './loader';
 
 /**
  * class for Search Page Handling
@@ -9,7 +10,8 @@ export default class SrchPg extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            allPokeData: []
+            allPokeData: [],
+            showLoader: true
         }
     }
     /**
@@ -21,7 +23,8 @@ export default class SrchPg extends React.Component {
         Axios.all(allPokeData.map(obj => Axios.get(obj.value)))
         .then(Axios.spread((...res) => {
             this.setState({
-                allPokeData:res
+                allPokeData:res,
+                showLoader: false
             });  
         })).catch((err)=>{
             console.log('Something went wrong. Please try again.');
@@ -42,6 +45,7 @@ export default class SrchPg extends React.Component {
 
     render(){
         return (
+            this.state.showLoader?<Loader /> :
             <div className="srch-rslt-container container">
                 {this.state.allPokeData.length?this.getAllPokeDtls():<></>}
             </div>
