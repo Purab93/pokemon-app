@@ -9,6 +9,9 @@
     ○ A details page - that would display all the attributes associated with the Pokemon. 
 
 
+
+Check if Node is installed on the system. If not install Node in your system.
+
 In the project directory, you can run:
 
 ### `npm install`
