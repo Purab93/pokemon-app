@@ -150,7 +150,6 @@ span.evol-data {
 .srch-poke-card {
     margin: 15px 0 15px 15px;
     text-align: center;
-    width: 30%;
     display: inline-block;
 }
 
@@ -242,9 +241,19 @@ span.accor-header-icon {
 }
 
 .pokeball-logo img {
-    max-width:200px;
+    max-width:150px;
 }
 
 .sel-holder div {
     text-transform: capitalize;
+}
+@media (max-width:641px)  { 
+    .pokeball-logo img {
+        max-width:100px;
+    }
+}
+@media (max-width:480px) {
+    .pokeball-logo img {
+        max-width:50px;
+    }
 }
