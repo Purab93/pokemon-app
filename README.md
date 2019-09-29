@@ -12,7 +12,7 @@
 
 Check if Node is installed on the system. If not install Node in your system.
 
-In the project directory, you can run:
+In the project directory, you can run:g
 
 ### `npm install`
 
@@ -35,3 +35,9 @@ Your app is ready to be deployed!
 
 Runs the app in the production mode.<br>
 Open [http://localhost:5000](http://localhost:5000) to view it in the browser.
+
+### Unit Test
+
+Please check the Test Document in Repo for the basic Unit Test cases.
+
+Thank You
