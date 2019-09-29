@@ -43,12 +43,12 @@ export default class PokeDetail extends React.Component {
                 })
                 let addData = {
                     baseHapp: speciesData.base_happiness,
-                    color: speciesData.color.name,
+                    color: speciesData.color && speciesData.color.name?speciesData.color.name:null,
                     captureRate: speciesData.capture_rate,
                     evolvesFrom: speciesData.evolves_from_species && speciesData.evolves_from_species.name ?speciesData.evolves_from_species.name:null,
                     natureTxt: natureTxt,
-                    growthRate: speciesData.growth_rate.name,
-                    habitat: speciesData.habitat.name
+                    growthRate: speciesData.growth_rate && speciesData.growth_rate.name?speciesData.growth_rate.name:null,
+                    habitat: speciesData.habitat && speciesData.habitat.name?speciesData.habitat.name:null
                 };
                 let finalData = { ...pokeData, ...addData };
                 this.setState({
@@ -181,26 +181,30 @@ export default class PokeDetail extends React.Component {
                                         <br />
                                             <span className="stat-pow">{pokeData.baseHapp}</span>
                                         </div>
-                                        <div className="poke-stat">
+                                        {pokeData.captureRate?<div className="poke-stat">
                                             Capture Rate
                                         <br />
                                             <span className="stat-pow">{pokeData.captureRate}</span>
-                                        </div>
+                                        </div>:<></>}
+                                        {pokeData.growthRate?
                                         <div className="poke-stat">
                                             Growth Rate
                                         <br />
                                             <span className="stat-pow">{pokeData.growthRate}</span>
-                                        </div>
+                                        </div>:<></>}
+                                        
+                                        {pokeData.habitat?
                                         <div className="poke-stat">
                                             Habitat
                                         <br />
                                             <span className="stat-pow">{pokeData.habitat}</span>
-                                        </div>
+                                        </div>:<></>}
+                                        {pokeData.color?
                                         <div className="poke-stat">
                                             Color
                                         <br />
                                             <span className="stat-pow">{pokeData.color}</span>
-                                        </div>
+                                        </div>:<></>}
                                     </div>
                                     </Card.Body>
                                 </Accordion.Collapse>

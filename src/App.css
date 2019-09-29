@@ -69,6 +69,7 @@ body {
     border: 8px solid #0c4a94;
     border-radius: 10px;
     background: #eee;
+    margin: 20px 10px;
 }
 
 .poke-card-header,
@@ -242,4 +243,8 @@ span.accor-header-icon {
 
 .pokeball-logo img {
     max-width:200px;
+}
+
+.sel-holder div {
+    text-transform: capitalize;
 }
