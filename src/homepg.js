@@ -3,9 +3,11 @@ import { Alert, Button } from 'react-bootstrap';
 import Select from 'react-select';
 import Axios from 'axios';
 import { Link } from "react-router-dom";
-
 import PokeCard from './pokecard';
 
+/**
+ * class for rendering the Homepage data
+ */
 export default class HomePage extends React.Component {
         constructor(props) {
             super(props);
@@ -16,13 +18,15 @@ export default class HomePage extends React.Component {
                 srchDisable: true
             }
         }
-
+        /**
+         * Method checks for data in localstorage if not found decides which API to be called
+         * Use of memoization, hence, requests don't need to be send to the server repeatedly
+         */
         componentWillMount() {
             let date = new Date(),
                 pokeData = localStorage.getItem(date.toDateString()),
                 pokeList = localStorage.getItem('pokeList');
 
-            //use of memoization hence requests don't need to be send to server repeatedly
             if (pokeData && pokeList) {
                 pokeData = JSON.parse(pokeData);
                 pokeList = JSON.parse(pokeList);
@@ -38,24 +42,10 @@ export default class HomePage extends React.Component {
             }
 
         }
-
-        fetchRndmPokeData(pokeList) {
-            this.getRndmPokeData().then((rndmPokeData) => {
-                if (rndmPokeData.status === 200) {
-                    let date = new Date();
-                    localStorage.setItem(date.toDateString(), JSON.stringify(rndmPokeData.data));
-                    this.setState({
-                        pokeData: rndmPokeData.data,
-                        pokeList
-                    });
-                } else {
-                    this.showError('Something went wrong. Please try again.');
-                }
-            }).catch((err) => {
-                this.showError('Something went wrong. Please try again.');
-            });
-        }
-
+        /**
+         * Fetches data from 2 API's to show user Poke list and Random Poke
+         * Stores in localstorage so the user doesn't need to fetch the API once fetched
+         */
         getHomeData() {
             Axios.all([this.getPokeList(), this.getRndmPokeData()])
                 .then(Axios.spread((pokeListData, rndmPokeData) => {
@@ -81,15 +71,41 @@ export default class HomePage extends React.Component {
                     this.showError('Something went wrong. Please try again.');
                 });
         }
-
+        /**
+         * API call for getting poke list
+         */
         getPokeList() {
             return Axios.get('https://pokeapi.co/api/v2/pokemon/?offset=0&limit=964');
         }
-
+        /**
+         * API call for getting random poke data
+         */
         getRndmPokeData() {
             let rndmPokeNum = Math.floor(Math.random() * Math.floor(807));
 
             return Axios.get('https://pokeapi.co/api/v2/pokemon/' + rndmPokeNum);
+        }
+
+        /**
+         * Fetches only Random Poke data and saves pokeList to state from local storage
+         * @param {Object} pokeList passed to udpate state
+         */
+        
+        fetchRndmPokeData(pokeList) {
+            this.getRndmPokeData().then((rndmPokeData) => {
+                if (rndmPokeData.status === 200) {
+                    let date = new Date();
+                    localStorage.setItem(date.toDateString(), JSON.stringify(rndmPokeData.data));
+                    this.setState({
+                        pokeData: rndmPokeData.data,
+                        pokeList
+                    });
+                } else {
+                    this.showError('Something went wrong. Please try again.');
+                }
+            }).catch((err) => {
+                this.showError('Something went wrong. Please try again.');
+            });
         }
 
         hndlPokeChng = (selPoke) => {
@@ -98,7 +114,10 @@ export default class HomePage extends React.Component {
                 srchDisable: !(selPoke.length > 0)
             });
         }
-
+        /**
+         * Error Message display method
+         * @param {String} errMsg dynamic variable for error msg display 
+         */
         showError(errMsg) {
             this.setState({
                 showErrMsg: true,

@@ -8,6 +8,9 @@ import HomePg from './homepg';
 import SrchPg from './searchpg';
 import PokeDetail from './pokedetail';
 
+/**
+ * App class use for setting Routing in the APP
+ */
 export default class App extends React.Component {
   render(){
     return (

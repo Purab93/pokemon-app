@@ -1,5 +1,7 @@
 import React from 'react';
-
+/**
+ * Menu class for logos and options
+ */
 export default class Menu extends React.Component {
     render(){
         return (

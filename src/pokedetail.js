@@ -5,6 +5,10 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Accordion, Card } from 'react-bootstrap';
 
+
+/**
+ * class for Pokemon Details and Features
+ */
 export default class PokeDetail extends React.Component {
     constructor(props) {
         super(props);
@@ -15,6 +19,10 @@ export default class PokeDetail extends React.Component {
         let pokeData = this.getPokeDetails();
         this.getSpeciesData(pokeData, this.state.species);
     }
+
+    /**
+     * Simplifies and returns Poke details
+     */
 
     getPokeDetails() {
         let pokeData = this.state;
@@ -29,7 +37,11 @@ export default class PokeDetail extends React.Component {
             moves: this.getPokeMoves(pokeData.moves)
         }
     }
-
+    /**
+     * Fetches additional data for the pokemon species using species API
+     * @param {Object} pokeData use for later merging the species data and updating state
+     * @param {Object} speciesData base species data passed for API call
+     */
     getSpeciesData(pokeData, speciesData) {
         Axios(speciesData.url)
             .then((res) => {
@@ -58,7 +70,10 @@ export default class PokeDetail extends React.Component {
                 console.log('Something went wrong');
             });
     }
-
+    /**
+     * Returns pokemon moves DOM
+     * @param {Array} pokeMoves 
+     */
     getPokeMoves(pokeMoves) {
         return (
             <>
@@ -72,7 +87,10 @@ export default class PokeDetail extends React.Component {
             </>
         )
     }
-
+    /**
+     * Return pokemon Statistics DOM
+     * @param {Array} stats 
+     */
     getPokeStats(stats) {
         return (<>
             {stats.map((obj) => {
@@ -86,14 +104,20 @@ export default class PokeDetail extends React.Component {
             })}
         </>);
     }
-
+    /**
+     * Returns Pokemon Type String
+     * @param {Array} pokeType 
+     */
     getPokeType(pokeType) {
         let typeData = pokeType.map((val) => {
             return val.type.name;
         });
         return typeData.join(', ');
     }
-
+    /**
+     * Returns Image Slider for Pokemon Data
+     * @param {Object} imgData 
+     */
     getPokeImgs(imgData) {
         let sliderConfig = {
             dots: false,

@@ -4,8 +4,15 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router-dom";
 
+
+/**
+ * class for Pokemon Card Display Summary
+ */
 export default class PokeCard extends React.Component {
 
+    /**
+     * Simplifies and returns Poke details
+     */
     getPokeDetails(){
         let pokeData = this.props;
         return {
@@ -15,15 +22,20 @@ export default class PokeCard extends React.Component {
             hp: pokeData.base_experience
         }
     }
-
-
+    /**
+     * Returns Pokemon Type String
+     * @param {Array} pokeType 
+     */
     getPokeType(pokeType) {
         let typeData = pokeType.map((val) => {
             return val.type.name;
         });
         return typeData.join(', ');
     }
-
+    /**
+     * Returns Image Slider for Pokemon Data
+     * @param {Object} imgData 
+     */
     getPokeImgs(imgData) {
         let sliderConfig = {
             dots: false,
