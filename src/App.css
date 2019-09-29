@@ -6,34 +6,25 @@
     height: 40vmin;
 }
 
-.App-header {
-    background-color: #282c34;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+body {
+    background-color: #eee !important;
 }
 
-.App-link {
-    color: #09d3ac;
-}
-
-.app-container{
-  background: #000;
+.link-holder {
+    padding: 5px 0;
 }
 
 .sel-holder {
-  position: relative;
-  min-width: 50%;
-  display: inline-block;
+    position: relative;
+    min-width: 50%;
+    max-width: 80%;
+    display: inline-block;
 }
 
-.srch-btn {
-  display: inline-block;
-  margin: 0 10px;
+.srch-btn,
+.list-all-btn {
+    display: inline-block;
+    margin: 0 10px;
 }
 
 .home-container {
@@ -45,9 +36,9 @@
     text-align: center;
 }
 
-.btn.disabled, 
-.btn:disabled{
-  cursor: not-allowed;
+.btn.disabled,
+.btn:disabled {
+    cursor: not-allowed;
 }
 
 .poke-img {
@@ -58,24 +49,33 @@
     max-width: 200px;
 }
 
+.home-poke-quest {
+    margin: 15px;
+    font-size: 24px;
+    font-weight: 700;
+    color: #dc3545;
+    text-decoration: underline;
+}
+
 .poke-card-container {
-    border: 8px solid #facc48;
+    border: 8px solid #0c4a94;
     border-radius: 10px;
     display: inline-block;
-    margin-top: 25px;
-    background: #fff;
+    background: #eee;
+    min-width: 250px;
 }
+
 .poke-details-container {
-  border: 8px solid #facc48;
-  border-radius: 10px;
-  background: #fff;
+    border: 8px solid #0c4a94;
+    border-radius: 10px;
+    background: #eee;
 }
 
 .poke-card-header,
 .poke-detail-header {
     padding: 10px;
-    background: #facc48;
-    color: #0c4a94;
+    background: #0c4a94;
+    color: #facc48;
     position: relative;
     text-align: left;
 }
@@ -84,21 +84,36 @@
     text-transform: uppercase;
     font-weight: 800;
     padding: 5px 0 0;
+    max-width: 70%;
+    font-size: 20px;
+    float: left;
 }
 
 .poke-hp {
-    position: absolute;
-    top: 15px;
-    right: 5px;
-    background: #0c4a94;
-    color: #facc48;
+    position: relative;
+    float: right;
+    top: 10px;
+    right: -10px;
+    background: #dc3545;
+    color: #eee;
     padding: 5px;
     border-radius: 10px;
+    font-weight: 700;
+    font-size: 16px;
 }
-.poke-type {
-    font-size: 12px;
+
+.poke-type-data {
+    font-size: 14px;
     font-weight: 600;
     text-transform: capitalize;
+    color: #eee;
+    clear: both;
+    max-width: 80%;
+    padding: 5px 5px 5px 0;
+}
+
+span.evol-data {
+    color: #facc48;
 }
 
 .slick-arrow.slick-prev:before,
@@ -119,12 +134,12 @@
     padding: 20px 0;
 }
 
-.logo-holder img{
-  max-width: 40%;
+.logo-holder img {
+    max-width: 35%;
 }
 
-.poke-card-container .poke-img-slider{
-  padding: 0 15px;
+.poke-card-container .poke-img-slider {
+    padding: 0 15px;
 }
 
 .poke-detail-body .poke-img-slider {
@@ -132,20 +147,23 @@
 }
 
 .srch-poke-card {
-  float: left;
-  margin: 15px;
-  text-align: center;
+    margin: 15px 0 15px 15px;
+    text-align: center;
+    width: 30%;
+    display: inline-block;
 }
 
 .poke-stat {
-  float: left;
-  padding: 10px;
-  margin: 5px;
-  background: #0c4a94;
-  border-radius: 10px;
-  color: #facc48;
-  font-weight: 500;
-  text-transform: capitalize;
+    display: inline-block;
+    padding: 10px;
+    margin: 5px;
+    background: #0c4a94;
+    border-radius: 10px;
+    color: #eee;
+    font-weight: 700;
+    text-transform: capitalize;
+    text-align: center;
+    width: 30%;
 }
 
 .poke-stats-header {
@@ -162,11 +180,66 @@
     position: relative;
 }
 
-.poke-stats-holder{
-  float: left;
-  width: 75%;
+.poke-stats-holder {
+    float: left;
+    width: 75%;
 }
 
-.poke-details-container .poke-details{
-  margin: 10px auto;
+.stat-pow {
+    color: #facc48;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.poke-details-container .poke-details {
+    margin: 10px auto;
+}
+
+.poke-move {
+    position: relative;
+    float: left;
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid #0c4a94;
+    border-radius: 5px;
+    text-transform: capitalize;
+    font-weight: 500;
+    color: #0c4a94;
+}
+
+.poke-detail-body .poke-moves-holder {
+    padding: 25px;
+}
+
+span.accor-header-text {
+    color: #0c4a94;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+span.accor-header-icon {
+    margin: 15px;
+    color: #0c4a94;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 1px 5px;
+    border: 2px solid #0c4a94;
+    border-radius: 20px;
+}
+
+.pokeball-logo {
+    position: absolute;
+    top: 0;
+}
+
+.pokeball-logo-left {
+    left: 25px;
+}
+
+.pokeball-logo-right {
+    right: 25px;
+}
+
+.pokeball-logo img {
+    max-width:200px;
 }

@@ -35,7 +35,7 @@ export default class SrchPg extends React.Component {
 
     render(){
         return (
-            <div className="srch-rslt-container">
+            <div className="srch-rslt-container container">
                 {this.state.allPokeData.length?this.getAllPokeDtls():<></>}
             </div>
         );

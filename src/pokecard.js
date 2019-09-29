@@ -56,7 +56,7 @@ export default class PokeCard extends React.Component {
                     <div className="poke-hp">
                         <div>{pokeData.hp+'HP'}</div>
                     </div>
-                    <div className="poke-type">{pokeData.type + ' Pokemon'}</div>
+                    <div className="poke-type-data">{pokeData.type + ' Pokemon'}</div>
                 </div>
                 <div className="poke-img-slider">
                     {pokeData.imgData}

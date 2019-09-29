@@ -1,16 +1,23 @@
 import React from 'react';
+import Axios from 'axios';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { Accordion, Card } from 'react-bootstrap';
 
 export default class PokeDetail extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state={...props.location.state}
+        this.state = { ...props.location.state }
     }
 
-    getPokeDetails(){
-        let pokeData = this.state;debugger
+    componentDidMount() {
+        let pokeData = this.getPokeDetails();
+        this.getSpeciesData(pokeData, this.state.species);
+    }
+
+    getPokeDetails() {
+        let pokeData = this.state;
         return {
             name: pokeData.name,
             imgData: this.getPokeImgs(pokeData.sprites),
@@ -18,17 +25,62 @@ export default class PokeDetail extends React.Component {
             hp: pokeData.base_experience,
             weight: pokeData.weight,
             height: pokeData.height,
-            stats: this.getPokeStats(pokeData.stats)
+            stats: this.getPokeStats(pokeData.stats),
+            moves: this.getPokeMoves(pokeData.moves)
         }
     }
 
+    getSpeciesData(pokeData, speciesData) {
+        Axios(speciesData.url)
+            .then((res) => {
+                let speciesData = res.data;
+                let natureTxt = '';
 
-    getPokeStats(stats){
+                speciesData.flavor_text_entries.filter((obj, index) => {
+                    if (obj.language.name === 'en') {
+                        natureTxt += ' ' + obj.flavor_text;
+                    }
+                })
+                let addData = {
+                    baseHapp: speciesData.base_happiness,
+                    color: speciesData.color.name,
+                    captureRate: speciesData.capture_rate,
+                    evolvesFrom: speciesData.evolves_from_species && speciesData.evolves_from_species.name ?speciesData.evolves_from_species.name:null,
+                    natureTxt: natureTxt,
+                    growthRate: speciesData.growth_rate.name,
+                    habitat: speciesData.habitat.name
+                };
+                let finalData = { ...pokeData, ...addData };
+                this.setState({
+                    finalData
+                })
+            }).catch((err) => {
+                console.log('Something went wrong');
+            });
+    }
+
+    getPokeMoves(pokeMoves) {
+        return (
+            <>
+                {pokeMoves.map((obj) => {
+                    return (
+                        <div className="poke-move" key={obj.move.name}>
+                            {obj.move.name}
+                        </div>
+                    )
+                })}
+            </>
+        )
+    }
+
+    getPokeStats(stats) {
         return (<>
-            {stats.map((obj)=>{
+            {stats.map((obj) => {
                 return (
                     <div className="poke-stat" key={obj.stat.name}>
-                        {obj.stat.name} - {obj.base_stat}
+                        {obj.stat.name}
+                        <br />
+                        <span className="stat-pow">{obj.base_stat}</span>
                     </div>
                 )
             })}
@@ -46,15 +98,14 @@ export default class PokeDetail extends React.Component {
         let sliderConfig = {
             dots: false,
             infinite: true,
-            speed: 500,
             slidesToShow: 1,
             slidesToScroll: 1,
             className: 'poke-sldr',
             autoplay: true,
-            autoplaySpeed: 1000,
+            autoplaySpeed: 2000,
             lazyLoad: 'progressive'
         };
-        return (<Slider {...sliderConfig } >
+        return (<Slider {...sliderConfig} >
             {
                 Object.keys(imgData).reverse().map((key, index) => {
                     if (imgData[key]) {
@@ -62,20 +113,24 @@ export default class PokeDetail extends React.Component {
                     }
                 })
             }
-            </Slider >
+        </Slider >
         );
     }
 
-    render(){
-        let pokeData = this.getPokeDetails();
+    render() {
+        let pokeData = this.state && this.state.finalData ? this.state.finalData : {};
         return (
             <div className="poke-details-container">
                 <div className="poke-detail-header">
                     <div className="poke-name">{pokeData.name}</div>
                     <div className="poke-hp">
-                        <div>{pokeData.hp+'HP'}</div>
+                        <div>{pokeData.hp + 'HP'}</div>
                     </div>
-                    <div className="poke-type">{pokeData.type + ' Pokemon'}</div>
+                    <div className="poke-type-data">
+                        <span className="poke-typ">{pokeData.type + ' Pokemon, '}</span>
+                        {pokeData.evolvesFrom?<span className="evol-data">{'Evolves from '+ pokeData.evolvesFrom + ', '}</span>:<></>}
+                        <span className="ht-wt-data">{'Height: ' + pokeData.height + 'in Weight:'+ pokeData.weight + 'lbs'}</span>
+                    </div>
                 </div>
                 <div className="poke-detail-body row">
                     <div className="poke-img-slider col-12 col-md-4">
@@ -83,10 +138,75 @@ export default class PokeDetail extends React.Component {
                     </div>
 
                     <div className="poke-details col-12 col-md-8">
-                        <div className="poke-stats-header">Stats</div>
                         <div className="poke-stats-holder">
                             {pokeData.stats}
                         </div>
+                    </div>
+                    <div className="poke-moves-holder col-12">
+                        <Accordion>
+                            <Card>
+                                <Accordion.Toggle as={Card.Header} eventKey="0">
+                                    <span className="accor-header-text">Summary</span>
+                                    <span className="accor-header-icon">+</span>
+                                </Accordion.Toggle>
+                                <Accordion.Collapse eventKey="0">
+                                    <Card.Body>
+                                        <div className="species-desc">
+                                            {pokeData.natureTxt}
+                                        </div>
+                                    </Card.Body>
+                                </Accordion.Collapse>
+                            </Card>
+                            <Card>
+                                <Accordion.Toggle as={Card.Header} eventKey="1">
+                                    <span className="accor-header-text">Attacks</span>
+                                    <span className="accor-header-icon">+</span>
+                                </Accordion.Toggle>
+                                <Accordion.Collapse eventKey="1">
+                                    <Card.Body>
+                                        {pokeData.moves}
+                                    </Card.Body>
+                                </Accordion.Collapse>
+                            </Card>
+                            <Card>
+                                <Accordion.Toggle as={Card.Header} eventKey="2">
+                                    <span className="accor-header-text">Additional Info</span>
+                                    <span className="accor-header-icon">+</span>
+                                </Accordion.Toggle>
+                                <Accordion.Collapse eventKey="2">
+                                    <Card.Body>
+                                        <div className="add-info">
+                                        <div className="poke-stat">
+                                            Base Happiness
+                                        <br />
+                                            <span className="stat-pow">{pokeData.baseHapp}</span>
+                                        </div>
+                                        <div className="poke-stat">
+                                            Capture Rate
+                                        <br />
+                                            <span className="stat-pow">{pokeData.captureRate}</span>
+                                        </div>
+                                        <div className="poke-stat">
+                                            Growth Rate
+                                        <br />
+                                            <span className="stat-pow">{pokeData.growthRate}</span>
+                                        </div>
+                                        <div className="poke-stat">
+                                            Habitat
+                                        <br />
+                                            <span className="stat-pow">{pokeData.habitat}</span>
+                                        </div>
+                                        <div className="poke-stat">
+                                            Color
+                                        <br />
+                                            <span className="stat-pow">{pokeData.color}</span>
+                                        </div>
+                                    </div>
+                                    </Card.Body>
+                                </Accordion.Collapse>
+                            </Card>
+                        </Accordion>
+
                     </div>
                 </div>
             </div>
