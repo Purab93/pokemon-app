@@ -31,9 +31,13 @@ It correctly bundles React in production mode and optimizes the build for the be
 The build is minified and the filenames include the hashes.<br>
 Your app is ready to be deployed!
 
+### `npm install -g serve`
+
+This package will install a global level serve which will help to create a static server to host the app.
+
 ### `serve -s build -l 5000`
 
-Runs the app in the production mode.<br>
+This will create a Static Server. Runs the app in the production mode.<br>
 Open [http://localhost:5000](http://localhost:5000) to view it in the browser.
 
 ### Unit Test

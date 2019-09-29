@@ -10,6 +10,7 @@ Homepage:-
     7.Check if logos are loaded correctly, if not check for alt text.
     8.Check if 'View Details' link is functional of randmon pokemon.
     9.Check once List API is called once, on refresh its not called again so we can validate the use of Memoization. This can be done by checking server calls made from network tab requests in console window. 
+    10.Check for Multi Users that different pokemon is loaded.
 
 Pokemon Search Page:-
     1.See if all pokemons selected on search are loaded correctly.
@@ -17,6 +18,7 @@ Pokemon Search Page:-
     3.Check for alt text in images.
     4.Check if 'View Details' link is functional for all pokemons and correct data is loaded on click.
     5.Refresh page to check if same options are populated again.
+    6.On logo click route to homepage.
 
 Pokemon Details Page:-
     1. See if all details of the pokemon are loaded correctly.
@@ -27,3 +29,6 @@ Pokemon Details Page:-
     6. Check with online API if data shown is precise and correct.
     7. Check if any data is missed in the main API.
     8. Reload page to see if the data for that pokemon is loaded correctly   
+    9. On logo click route to homepage.
+
+Check the above on all browsers like chrome, firefox and others.
